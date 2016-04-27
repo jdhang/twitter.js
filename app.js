@@ -1,5 +1,6 @@
 var express = require('express'),
     app = express(),
+    socketio = require('socket.io'),
     swig = require('swig'),
     routes = require('./routes'),
     bodyParser = require('body-parser'),
@@ -26,8 +27,12 @@ app.use(function (req, res, next) {
   next()
 })
 
-app.use('/', routes)
-
-app.listen(port, function () {
+// start express server
+var server = app.listen(port, function () {
   console.log('Server listening on', port)
 })
+
+// launching Socket.io to listen to our server
+var io = socketio.listen(server)
+
+app.use('/', routes(io))
