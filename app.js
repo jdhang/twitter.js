@@ -2,6 +2,7 @@ var express = require('express'),
     app = express(),
     swig = require('swig'),
     routes = require('./routes'),
+    bodyParser = require('body-parser'),
     port = 3000
 
 // use Swig for view templates, with html files, using views from views folder
@@ -14,6 +15,10 @@ swig.setDefaults({ cache: false })
 
 // serve public folder
 app.use(express.static('public'))
+
+// parse the request body
+app.use(bodyParser.urlencoded())
+app.use(bodyParser.json())
 
 // log request method, path and response status code
 app.use(function (req, res, next) {

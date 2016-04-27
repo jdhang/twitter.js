@@ -11,11 +11,42 @@
       <b>Your Name</b><br>
       100 followers
     </div>
+
     <div class="col-md-9">
 
+      {% if showForm %}
+      <form action="/tweets" method="POST" class="form-inline row tweet-form">
+        <div class="form-group col-md-4">
+          <input name="name" type="text" id="name_field" class="form-control"
+          placeholder="Name" value="{{ name }}"/>
+        </div>
+        <div class="form-group col-md-4">
+          <input name="text" type="text" id="text_field" class="form-control"
+          placeholder="Text"/>
+        </div>
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-primary">Tweet</button>
+        </div>
+      </form>
+      {% endif %}
+
       <!-- display tweets here -->
+      <h2 class="tweet-header">{{ title }}</h2>
       {% for tweet in tweets %}
-        <li>{{tweet.text}}</li>
+      <div class="row">
+        <div class="col-md-2 text-right tweet-picture">
+          <img src="http://placehold.it/70x70">
+        </div>
+        <div class="col-md-10 tweet-data">
+          <div class="col-md-12">
+            <li class='no-bullet tweet-name'>
+              <a href="/users/{{ tweet.name }}">{{ tweet.name }}</a>
+            </li>
+            <li class='no-bullet'>{{ tweet.text }}</li>
+            <li class='no-bullet'><a href="#">Re-tweet</a></li>
+          </div>
+        </div>
+      </div>
       {% endfor %}
 
     </div>

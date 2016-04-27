@@ -57,3 +57,27 @@ code {
 .content .by {
   font-weight: bold;
 }
+
+.tweet-header {
+  margin-top: 0px;
+}
+
+.no-bullet {
+  list-style: none;
+}
+
+.tweet-name {
+  font-weight: bold;
+}
+
+.tweet-data {
+  margin: 5px 0;
+}
+
+.tweet-picture {
+  padding-top: 10px;
+}
+
+.tweet-form {
+  margin-bottom: 10px;
+}
