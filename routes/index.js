@@ -33,9 +33,11 @@ module.exports = function (io) {
 
   router.post('/tweets', function (req, res) {
     var name = req.body.name,
-        text = req.body.text
+        text = req.body.text,
+        tweet = { name: name, text: text }
     tweetBank.add(name, text)
-    io.sockets.emit('new_tweet', { name: name, text: text })
+    var newTweet = tweetBank.find( tweet )
+    io.sockets.emit('new_tweet', newTweet[0])
     res.redirect('/')
   })
 

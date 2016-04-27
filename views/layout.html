@@ -92,6 +92,39 @@
     socket.on('new_tweet', function (tweet) {
       console.log(tweet);
       // some logic to add the new tweet to the DOM…
+      var tweetDiv = document.createElement('div')
+      var tweetPic = document.createElement('div')
+      var image = document.createElement('img')
+      var tweetData = document.createElement('div')
+      var tweetName = document.createElement('li')
+      var tweetText = document.createElement('li')
+      var tweetNameLink = document.createElement('a')
+      var tweetTweetLink = document.createElement('a')
+      var tweetTweetLi = document.createElement('li')
+      tweetDiv.className = "row"
+      tweetDiv.id = "tweet-" + tweet.id
+      tweetPic.className = "col-md-2 text-right tweet-picture"
+      image.src = "http://placehold.it/70x70"
+      tweetPic.appendChild(image)
+      tweetData.className = "col-md-10 tweet-data"
+      tweetName.className ='no-bullet tweet-name'
+      tweetNameLink.href = '/users/' + tweet.name
+      tweetNameLink.innerHTML = tweet.name
+      tweetName.appendChild(tweetNameLink)
+      tweetData.appendChild(tweetName)
+      tweetText.className ='no-bullet'
+      tweetText.innerHTML = tweet.text
+      tweetTweetLink.href = "#"
+      tweetTweetLink.innerHTML = "Re-tweet"
+      tweetTweetLi.className ='no-bullet'
+      tweetTweetLi.appendChild(tweetTweetLink)
+      tweetData.appendChild(tweetText)
+      tweetData.appendChild(tweetTweetLi)
+      tweetDiv.appendChild(tweetPic)
+      tweetDiv.appendChild(tweetData)
+      tweets.insertBefore(tweetDiv,
+          tweets.firstChild)
+      console.dir(tweetDiv)
     });
   </script>
 </html>

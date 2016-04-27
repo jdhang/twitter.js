@@ -32,13 +32,13 @@
 
       <!-- display tweets here -->
       <h2 class="tweet-header">{{ title }}</h2>
-      {% for tweet in tweets %}
       <div id="tweets" class="row">
-        <div class="col-md-2 text-right tweet-picture">
-          <img src="http://placehold.it/70x70">
-        </div>
-        <div class="col-md-10 tweet-data">
-          <div class="col-md-12">
+        {% for tweet in tweets %}
+        <div id="tweet-{{ tweet.id }}" class="row">
+          <div class="col-md-2 text-right tweet-picture">
+            <img src="http://placehold.it/70x70">
+          </div>
+          <div class="col-md-10 tweet-data">
             <li class='no-bullet tweet-name'>
               <a href="/users/{{ tweet.name }}">{{ tweet.name }}</a>
             </li>
@@ -46,9 +46,8 @@
             <li class='no-bullet'><a href="#">Re-tweet</a></li>
           </div>
         </div>
+        {% endfor %}
       </div>
-      {% endfor %}
-
     </div>
   </div>
 
