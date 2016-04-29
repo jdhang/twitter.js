@@ -35,14 +35,16 @@
       <div id="tweets" class="row">
         {% for tweet in tweets %}
         <div id="tweet-{{ tweet.id }}" class="row">
-          <div class="col-md-2 text-right tweet-picture">
-            <img src="http://placehold.it/70x70">
+          <div class="col-md-4 text-right tweet-picture">
+            <img src="{{ tweet.pictureurl }}">
           </div>
-          <div class="col-md-10 tweet-data">
+          <div class="col-md-8 tweet-data">
             <li class='no-bullet tweet-name'>
               <a href="/users/{{ tweet.name }}">{{ tweet.name }}</a>
             </li>
-            <li class='no-bullet'>{{ tweet.text }}</li>
+            <li class='no-bullet'>
+              <a href="/tweets/{{ tweet.id }}"> {{ tweet.content }} </a>
+           </li>
             <li class='no-bullet'><a href="#">Re-tweet</a></li>
           </div>
         </div>

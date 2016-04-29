@@ -4,7 +4,13 @@ var express = require('express'),
     swig = require('swig'),
     routes = require('./routes'),
     bodyParser = require('body-parser'),
+    pg = require('pg'),
+    conString = 'postgres://localhost:5432/twitterdb',
+    client = new pg.Client(conString),
     port = 3000
+
+// connect to postgress
+client.connect()
 
 // use Swig for view templates, with html files, using views from views folder
 app.engine('html', swig.renderFile)
@@ -35,4 +41,4 @@ var server = app.listen(port, function () {
 // launching Socket.io to listen to our server
 var io = socketio.listen(server)
 
-app.use('/', routes(io))
+app.use('/', routes(io, client))
