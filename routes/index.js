@@ -54,22 +54,36 @@ module.exports = function(io, client) {
   })
 
   router.post('/tweets', function(req, res) {
-    var name = req.body.name,
-      text = req.body.text
-    client.query('SELECT * FROM users WHERE name=$1', [name], function(err, result) {
+    var name = req.body.name.trim(),
+        text = req.body.text
+    clientQuery('SELECT * FROM users WHERE name=$1', [name])
+    .then(function (result) {
       var user = result.rows;
       if (user.length === 0) {
-        client.query('INSERT INTO users (name, pictureurl) VALUES ($1, $2)', [name, 'http://placehold.it/200x200'], function(err, result) {})
-      }
-      client.query('SELECT * FROM users WHERE name=$1', [name], function(err, result) {
-        var user = result.rows[0];
-        client.query('INSERT INTO tweets (userId, content) VALUES ($1, $2)', [user.id, text], function(err, result) {
-          // io.sockets.emit('new_tweet', )
-          res.redirect('/')
+        clientQuery('INSERT INTO users (name, pictureurl) VALUES ($1, $2)', [name, 'http://placehold.it/200x200'])
+        .then(function () {
+          clientQuery('SELECT * FROM users WHERE name=$1', [name])
+          .then(function (result) {
+            var user = result.rows[0]
+            clientQuery('INSERT INTO tweets (userId, content) VALUES ($1, $2)', [user.id, text])
+            .then(function () {
+              // io.sockets.emit('new_tweet', )
+              res.redirect('/')
+            })
+          })
         })
-      })
+      } else {
+        clientQuery('SELECT * FROM users WHERE name=$1', [name])
+        .then(function (result) {
+          var user = result.rows[0];
+          clientQuery('INSERT INTO tweets (userId, content) VALUES ($1, $2)', [user.id, text])
+          .then(function () {
+            // io.sockets.emit('new_tweet', )
+            res.redirect('/')
+          })
+        })
+      }
     })
-
   })
 
   return router
