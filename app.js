@@ -4,6 +4,7 @@ var express = require('express'),
     swig = require('swig'),
     routes = require('./routes'),
     bodyParser = require('body-parser'),
+    morgan = require('morgan'),
     pg = require('pg'),
     conString = 'postgres://localhost:5432/twitterdb',
     client = new pg.Client(conString),
@@ -28,10 +29,7 @@ app.use(bodyParser.urlencoded())
 app.use(bodyParser.json())
 
 // log request method, path and response status code
-app.use(function (req, res, next) {
-  console.log(req.method, req.path, res.statusCode)
-  next()
-})
+app.use(morgan('dev'))
 
 // start express server
 var server = app.listen(port, function () {

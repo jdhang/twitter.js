@@ -11,7 +11,7 @@ module.exports = function(io, client) {
         if (err) reject(err)
         else resolve(result)
       })
-    }) 
+    })
   }
 
   router.get('/', function(req, res) {
@@ -38,7 +38,8 @@ module.exports = function(io, client) {
 
   router.get('/tweets/:id', function(req, res) {
     var id = +req.params.id
-    client.query('SELECT tweets.content, users.name, users.pictureurl, tweets.id FROM tweets JOIN users on users.id = tweets.userid WHERE tweets.id=$1', [id], function(err, result) {
+    clientQuery('SELECT tweets.content, users.name, users.pictureurl, tweets.id FROM tweets JOIN users on users.id = tweets.userid WHERE tweets.id=$1', [id])
+    .then(function (result) {
       var tweets = result.rows;
       res.render('index', { title: 'Tweet', tweets: tweets })
     })
@@ -46,6 +47,10 @@ module.exports = function(io, client) {
 
   router.delete('/tweets/:id', function(req, res) {
     var id = +req.params.id
+    clientQuery('', [id])
+    .then(function () {
+      res.redirect('/')
+    })
   })
 
   router.post('/tweets', function(req, res) {
