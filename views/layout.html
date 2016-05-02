@@ -104,7 +104,7 @@
       tweetDiv.className = "row"
       tweetDiv.id = "tweet-" + tweet.id
       tweetPic.className = "col-md-2 text-right tweet-picture"
-      image.src = "http://placehold.it/70x70"
+      image.src = tweet.pictureurl
       tweetPic.appendChild(image)
       tweetData.className = "col-md-10 tweet-data"
       tweetName.className ='no-bullet tweet-name'
@@ -113,7 +113,7 @@
       tweetName.appendChild(tweetNameLink)
       tweetData.appendChild(tweetName)
       tweetText.className ='no-bullet'
-      tweetText.innerHTML = tweet.text
+      tweetText.innerHTML = tweet.content
       tweetTweetLink.href = "#"
       tweetTweetLink.innerHTML = "Re-tweet"
       tweetTweetLi.className ='no-bullet'
